@@ -1,0 +1,3 @@
+-> Filter: (bookings.start_date between '2024-01-01' and '2024-12-31')  (cost=0.45 rows=1) (actual time=0.057..0.057 rows=0 loops=1)
+    -> Table scan on bookings  (cost=0.45 rows=2) (actual time=0.0442..0.0498 rows=2 loops=1)
+After indexing and add optimisation, the query execution time reduces significantly.
