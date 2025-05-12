@@ -1,6 +1,6 @@
 
 
-create table bookings
+CREATE TABLE bookings
 (
     booking_id  char(36)                                  not null
         primary key,
@@ -25,19 +25,19 @@ create table bookings
 );
 
 
-create index idx_bookings_booking_id
+CREATE INDEX idx_bookings_booking_id
     on bookings (booking_id);
 
-create index idx_bookings_property_id
+CREATE INDEX idx_bookings_property_id
     on bookings (property_id);
 
-create index idx_bookings_status
+CREATE INDEX idx_bookings_status
     on bookings (status);
 
-create index idx_bookings_total_price
+CREATE INDEX idx_bookings_total_price
     on bookings (total_price);
 
-create index user_id
+CREATE INDEX user_id
     on bookings (user_id);
 
 
