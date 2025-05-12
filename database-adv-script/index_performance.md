@@ -1,0 +1,21 @@
+> Filter: ((select #2) > 3)  (cost=0.65 rows=4) (actual time=0.126..0.126 rows=0 loops=1)
+    -> Table scan on users  (cost=0.65 rows=4) (actual time=0.0607..0.0678 rows=4 loops=1)
+    -> Select #2 (subquery in condition; dependent)
+        -> Aggregate: count(0)  (cost=0.45 rows=1) (actual time=0.00932..0.0094 rows=1 loops=4)
+            -> Single-row covering index lookup on bookings using PRIMARY (booking_id=users.user_id)  (cost=0.35 rows=1) (actual time=0.00835..0.00835 rows=0 loops=4)
+
+-> Nested loop inner join  (cost=1.15 rows=2) (actual time=0.105..0.115 rows=2 loops=1)
+    -> Table scan on bookings  (cost=0.45 rows=2) (actual time=0.0806..0.0862 rows=2 loops=1)
+    -> Single-row index lookup on users using PRIMARY (user_id=bookings.user_id)  (cost=0.3 rows=1) (actual time=0.0126..0.0126 rows=1 loops=2)
+
+-> Window aggregate: row_number() OVER (ORDER BY count(bookings.booking_id) desc )   (actual time=0.2..0.202 rows=2 loops=1)
+    -> Table scan on <temporary>  (cost=2.5..2.5 rows=0) (actual time=0.197..0.198 rows=2 loops=1)
+        -> Temporary table  (cost=0..0 rows=0) (actual time=0.196..0.196 rows=2 loops=1)
+            -> Window aggregate: rank() OVER (ORDER BY count(bookings.booking_id) desc )   (actual time=0.178..0.181 rows=2 loops=1)
+                -> Sort: count(bookings.booking_id) DESC  (actual time=0.173..0.174 rows=2 loops=1)
+                    -> Table scan on <temporary>  (actual time=0.124..0.125 rows=2 loops=1)
+                        -> Aggregate using temporary table  (actual time=0.123..0.123 rows=2 loops=1)
+                            -> Inner hash join (properties.property_id = bookings.property_id)  (cost=1.1 rows=2) (actual time=0.0784..0.0851 rows=2 loops=1)
+                                -> Table scan on properties  (cost=0.175 rows=2) (actual time=0.0129..0.0182 rows=2 loops=1)
+                                -> Hash
+                                    -> Covering index scan on bookings using idx_bookings_property_id  (cost=0.45 rows=2) (actual time=0.0383..0.0428 rows=2 loops=1)
