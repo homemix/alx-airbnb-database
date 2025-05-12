@@ -1,0 +1,9 @@
+-> Left hash join (payments.booking_id = bookings.booking_id)  (cost=0.805 rows=4) (actual time=0.115..0.131 rows=2 loops=1)
+    -> Left hash join (properties.property_id = bookings.property_id)  (cost=0.885 rows=4) (actual time=0.0912..0.106 rows=2 loops=1)
+        -> Nested loop left join  (cost=1.15 rows=2) (actual time=0.054..0.0666 rows=2 loops=1)
+            -> Table scan on bookings  (cost=0.45 rows=2) (actual time=0.0326..0.0355 rows=2 loops=1)
+            -> Single-row index lookup on users using PRIMARY (user_id=bookings.user_id)  (cost=0.3 rows=1) (actual time=0.0137..0.0138 rows=1 loops=2)
+        -> Hash
+            -> Table scan on properties  (cost=0.228 rows=2) (actual time=0.0075..0.0135 rows=2 loops=1)
+    -> Hash
+        -> Table scan on payments  (cost=0.101 rows=1) (actual time=0.005..0.006 rows=1 loops=1)
