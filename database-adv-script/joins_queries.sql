@@ -1,10 +1,10 @@
-select bookings.*,users.* from bookings
-inner join users   on bookings.user_id = users.user_id;
+SELECT bookings.*,users.* FROM bookings
+INNER JOIN users   ON bookings.user_id = users.user_id;
 
-select  properties.*,reviews.* from properties
-left join reviews
-on properties.property_id = reviews.property_id;
+SELECT  properties.*,reviews.* FROM properties
+LEFT JOIN  reviews
+ON properties.property_id = reviews.property_id;
 
-select users.*,bookings.* from users
-left outer join bookings
-on users.user_id = bookings.user_id;
+SELECT users.*,bookings.* FROM users
+LEFT OUTER JOIN  bookings
+ON users.user_id = bookings.user_id;
